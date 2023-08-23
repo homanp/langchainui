@@ -3,7 +3,7 @@ import { memo, forwardRef, useRef, useImperativeHandle } from "react";
 import { chakra, Box } from "@chakra-ui/react";
 import { TreeNode } from "./tree-node";
 
-export const Tree = memo(
+export const TreeView = memo(
   forwardRef((props, ref) => {
     const elementRef = useRef(null);
 

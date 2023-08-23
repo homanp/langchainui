@@ -1,17 +1,16 @@
-import { useMemo } from "react";
-import { useAtom } from "jotai";
+import { useMemo, useState } from "react";
 import { uniq } from "ramda";
-import { expandedKeysAtom, selectionKeysAtom } from "../../utils/atoms";
+// import { expandedKeysAtom, selectionKeysAtom } from "../../utils/atoms";
 import {
   extendedNodes,
   nodesToSelectionKeys,
   findDescendantKeys,
   getExpandedKeys,
-} from "../../utils";
+} from "./utils";
 
 export const useTree = () => {
-  const [selectionKeys, setSelectionKeys] = useAtom(selectionKeysAtom);
-  const [expandedKeys, setExpandedKeys] = useAtom(expandedKeysAtom);
+  const [selectionKeys, setSelectionKeys] = useState({});
+  const [expandedKeys, setExpandedKeys] = useState({});
 
   const parents = useMemo(
     () =>

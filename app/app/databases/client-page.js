@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { xcodeDark } from "@uiw/codemirror-theme-xcode";
 import { sql } from "@codemirror/lang-sql";
@@ -28,8 +28,9 @@ import {
 import PageHeader from "@/components/page-header";
 import { useSidebar } from "@/lib/sidebar";
 import DataTable from "@/components/data-table";
-// import TreeView from "@/components/tree-view";
+import { TreeView } from "@/components/tree-view";
 import { columns, rows, tree } from "./mock";
+import Pagination from "@/components/pagination";
 
 const EXTENSIONS = {
   sql: sql(),
@@ -38,6 +39,17 @@ const EXTENSIONS = {
 export default function DatabasesClientPage() {
   const borderColor = useColorModeValue("gray.50", "#333");
   const menu = useSidebar();
+
+  const [currentPage, setCurrentPage] = useState(null);
+  const [pageSize, setPageSize] = useState(null);
+
+  const paginatedRows = useMemo(() => {
+    if (currentPage && pageSize) {
+      return rows.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    } else {
+      return [];
+    }
+  }, [currentPage, pageSize]);
 
   return (
     <Stack flex={1} paddingX={4} paddingY={4} spacing={4}>
@@ -63,7 +75,7 @@ export default function DatabasesClientPage() {
                 p: 2,
               }}
             >
-              {/* <TreeView value={tree} isReadOnly={false} isDisabled={false} /> */}
+              <TreeView value={tree} isReadOnly={false} isDisabled={false} />
             </Box>
           </VStack>
         </GridItem>
@@ -97,8 +109,15 @@ export default function DatabasesClientPage() {
                 extensions={[EXTENSIONS.sql]}
               />
             </Box>
-            <Box height={500} width="100%" overflowY="auto">
-              <DataTable columns={columns} data={rows} />
+            <Box height={470} width="100%" overflowY="auto">
+              <DataTable columns={columns} data={paginatedRows} />
+            </Box>
+            <Box>
+              <Pagination
+                total={rows.length}
+                onPageSizeChange={setPageSize}
+                onCurrentPageChange={setCurrentPage}
+              />
             </Box>
           </VStack>
         </GridItem>

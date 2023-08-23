@@ -14,12 +14,12 @@ import { useTree } from "./use-tree";
 export const TreeNode = memo(
   ({ root, node, path, index, isReadOnly = false, isDisabled = false }) => {
     const {
-      findDescendantKeys,
-      selectionKeys,
-      setSelectionKeys,
+    //   findDescendantKeys,
+    //   selectionKeys,
+    //   setSelectionKeys,
       expandedKeys,
       setExpandedKeys,
-      intermediates,
+    //   intermediates,
       isNodeLeaf,
     } = useTree();
 
@@ -32,7 +32,22 @@ export const TreeNode = memo(
     const isExpanded = useMemo(
       () => Object.prototype.hasOwnProperty.call(expandedKeys, node.key),
       [expandedKeys, node.key]
-    );    
+    );
+
+    // const isChecked = useMemo(() => {
+    //   const selection = selectionKeys[node.key];
+    //   return selection?.checked ?? false;
+    // }, [node.key, selectionKeys]);
+
+    // const isIntermediate = useMemo(() => {
+    //   if (
+    //     node.key === "all" &&
+    //     Object.values(intermediates).some((bool) => bool)
+    //   ) {
+    //     return true;
+    //   }
+    //   return intermediates[node.key] ?? false;
+    // }, [node.key, intermediates]);
 
     const expand = useCallback(() => {
       const keys = {
@@ -51,6 +66,31 @@ export const TreeNode = memo(
       setExpandedKeys(keys);
     }, [node.key, expandedKeys, setExpandedKeys]);
 
+    // const toggleSelectionKeys = useCallback(
+    //   (checked) => {
+    //     const descendants = findDescendantKeys(node);
+    //     const keys = {
+    //       ...selectionKeys,
+    //       [node.key]: {
+    //         ...selectionKeys[node.key],
+    //         checked,
+    //         intermediate: false,
+    //       },
+    //       ...descendants.reduce((acc, key) => {
+    //         acc[key] = {
+    //           ...selectionKeys[key],
+    //           checked,
+    //           intermediate: false,
+    //         };
+    //         return acc;
+    //       }, {}),
+    //     };
+
+    //     setSelectionKeys(keys);
+    //   },
+    //   [node, selectionKeys, setSelectionKeys, findDescendantKeys]
+    // );
+
     const onTogglerClick = useCallback(
       (event) => {
         if (isExpanded) collapse();
@@ -63,6 +103,18 @@ export const TreeNode = memo(
     );
 
     const createLabel = () => <Box as="span">{node.label}</Box>;
+
+    // const createCheckbox = () => (
+    //   <Checkbox
+    //     isChecked={isChecked}
+    //     isIndeterminate={isIntermediate}
+    //     isReadOnly={isReadOnly}
+    //     isDisabled={isDisabled}
+    //     onChange={(event) => {
+    //       toggleSelectionKeys(event.currentTarget.checked);
+    //     }}
+    //   />
+    // );
 
     const createToggler = () => {
       if (!descendants?.length) return null;
@@ -94,6 +146,7 @@ export const TreeNode = memo(
       >
         <HStack>
           {createToggler()}
+          {/* {createCheckbox()} */}
           {createLabel()}
         </HStack>
       </Box>
