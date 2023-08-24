@@ -48,8 +48,8 @@ export default function DataTable({ data, columns }) {
   });
 
   return (
-    <Table size="sm" bgColor={tableBgColor}>
-      <Thead>
+    <Table height={"100%"} size="sm">
+      <Thead position='sticky' top={0} bgColor={tableBgColor}>
         {table.getHeaderGroups().map((headerGroup) => (
           <Tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => {
