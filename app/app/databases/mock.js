@@ -189,51 +189,51 @@ export const rows = [
 
 export const tree = [
   {
-    key: "all",
-    label: "All Data Points",
+    key: "db1",
+    label: "Database 1",
     descendants: [
       {
-        key: "company",
-        label: "Company",
+        key: "tbl1",
+        label: "Table1",
         descendants: [
           {
-            key: "company.id",
+            key: "tbl1.id",
             label: "id",
           },
           {
-            key: "company.city",
+            key: "tbl1.city",
             label: "city",
           },
         ],
       },
       {
-        key: "device",
-        label: "Device",
+        key: "tbl2",
+        label: "Table 2",
         descendants: [
           {
-            key: "device.id",
+            key: "tbl1.id",
             label: "id",
           },
           {
-            key: "device.device_use",
+            key: "tbl1.device_use",
             label: "device_use",
           },
           {
-            key: "device.external_id",
+            key: "tbl1.external_id",
             label: "external_id",
           },
         ],
       },
       {
-        key: "device_type",
-        label: "Device Type",
+        key: "tbl3",
+        label: "Table 3",
         descendants: [
           {
-            key: "device_type.id",
+            key: "tbl3.id",
             label: "id",
           },
           {
-            key: "device_type.category",
+            key: "tbl3.category",
             label: "category",
           },
         ],
