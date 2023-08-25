@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useMemo } from "react";
 import CodeMirror from "@uiw/react-codemirror";
-import { xcodeDark } from "@uiw/codemirror-theme-xcode";
+import { xcodeDark, xcodeLight, defaultSettingsXcodeLight } from "@uiw/codemirror-theme-xcode";
 import { sql } from "@codemirror/lang-sql";
 import {
   Button,
@@ -102,10 +102,10 @@ export default function DatabasesClientPage() {
             </HStack>
             <Box width="100%">
               <CodeMirror
-                value="SELECT * from TABLE"
+                value="SELECT * from TABLE where colum='something' ORDER BY vector ANN OF [3.4, 7.8, 9.1] LIMIT 20"
                 width="100%"
                 height="300px"
-                theme={xcodeDark}
+                theme={xcodeLight}
                 extensions={[EXTENSIONS.sql]}
               />
             </Box>

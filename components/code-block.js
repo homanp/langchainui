@@ -36,7 +36,7 @@ export default function CodeBlock({ items }) {
           extensions={[
             markdown({ base: markdownLanguage, codeLanguages: languages }),
           ]}
-          theme={xcodeDark}
+          theme={defaultSettingsXcodeLight}
           value={items.find(({ id }) => id === item).code}
         />
       </Box>
