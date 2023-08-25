@@ -1,0 +1,5 @@
+fastapi==0.100.1
+uvicorn==0.23.2
+python-dotenv==1.0.0
+redis==4.6.0
+PyJWT==2.8.0
