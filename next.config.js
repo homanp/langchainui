@@ -1,3 +1,5 @@
+const path = require('path');
+
 const nextConfig = {
   experimental: {
     appDir: true,
@@ -7,7 +9,7 @@ const nextConfig = {
       asyncWebAssembly: true,
       layers: true,
     };
-
+    config.resolve.alias['@src'] = path.join(__dirname, 'src');
     return config;
   },
 };
