@@ -1,6 +1,14 @@
 import { memo, useRef, useMemo, useCallback } from "react";
-import { chakra, Checkbox, Box, HStack, IconButton } from "@chakra-ui/react";
+import {
+  chakra,
+  Checkbox,
+  Box,
+  HStack,
+  IconButton,
+  Icon,
+} from "@chakra-ui/react";
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
+import { BsDatabase, BsTable, BsKey } from "react-icons/bs";
 import { useTree } from "./use-tree";
 
 /**
@@ -14,12 +22,12 @@ import { useTree } from "./use-tree";
 export const TreeNode = memo(
   ({ root, node, path, index, isReadOnly = false, isDisabled = false }) => {
     const {
-    //   findDescendantKeys,
-    //   selectionKeys,
-    //   setSelectionKeys,
+      //   findDescendantKeys,
+      //   selectionKeys,
+      //   setSelectionKeys,
       expandedKeys,
       setExpandedKeys,
-    //   intermediates,
+      // intermediates,
       isNodeLeaf,
     } = useTree();
 
@@ -116,6 +124,15 @@ export const TreeNode = memo(
     //   />
     // );
 
+    const createIcon = () =>
+      node.type === "database" ? (
+        <Icon as={BsDatabase} />
+      ) : node.type === "keyspace" ? (
+        <Icon as={BsKey} />
+      ) : node.type === "table" ? (
+        <Icon as={BsTable} />
+      ) : null;
+
     const createToggler = () => {
       if (!descendants?.length) return null;
 
@@ -147,6 +164,7 @@ export const TreeNode = memo(
         <HStack>
           {createToggler()}
           {/* {createCheckbox()} */}
+          {createIcon()}
           {createLabel()}
         </HStack>
       </Box>

@@ -1,7 +1,10 @@
 "use client";
 import React, { useState, useMemo, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
-import { xcodeDark, xcodeLight, defaultSettingsXcodeLight } from "@uiw/codemirror-theme-xcode";
+import {
+  xcodeDark,
+  xcodeLight,
+} from "@uiw/codemirror-theme-xcode";
 import { sql } from "@codemirror/lang-sql";
 import {
   Button,
@@ -25,6 +28,7 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
+  useColorMode,
 } from "@chakra-ui/react";
 import axios from "axios";
 import {
@@ -49,7 +53,8 @@ const Types = ["CQL", "NL"];
 export default function DatabasesClientPage() {
   const borderColor = useColorModeValue("gray.50", "#333");
   const menu = useSidebar();
-
+  
+  const { colorMode } = useColorMode();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [dbName, setDBName] = useState("");
   const [connectedDBName, setConnectedDBName] = useState(null);
@@ -104,9 +109,11 @@ export default function DatabasesClientPage() {
           return {
             key: keySpace,
             label: keySpace,
+            type: "keyspace",
             descendants: res.data.map((table) => ({
               key: table,
               label: table,
+              type: "table",
             })),
           };
         })
@@ -115,6 +122,7 @@ export default function DatabasesClientPage() {
         {
           key: dbName,
           label: dbName,
+          type: "database",
           descendants: trees,
         },
       ]);
@@ -215,7 +223,7 @@ export default function DatabasesClientPage() {
                 value="SELECT * from TABLE where colum='something' ORDER BY vector ANN OF [3.4, 7.8, 9.1] LIMIT 20"
                 width="100%"
                 height="300px"
-                theme={xcodeLight}
+                theme={colorMode === 'light' ? xcodeLight : xcodeDark}
                 extensions={[EXTENSIONS.sql]}
               />
             </Box>
